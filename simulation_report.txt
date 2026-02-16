@@ -1,0 +1,56 @@
+===== BIO-HAZARD CLEANING AGENT SIMULATION REPORT =====
+
+1. Data Structures Used:
+- 2D numpy arrays for environment grid
+- Lists for storing clean, inaccessible, and bio-hazard coordinates
+- List for storing agent path
+- List for storing collected bio-hazard coordinates
+
+2. Algorithm Description:
+- Initialize environment (100x100 grid) with inaccessible areas and random bio-hazards
+- Initialize agent at a random clean cell
+- While agent is active:
+    - Randomly select movement direction
+    - Check if next cell is accessible and not visited
+    - Move agent to new cell
+    - If the cell has bio-hazard, collect and mark as cleaned
+    - Stop if no valid moves or next cell is inaccessible
+
+3. Test Data:
+- Environment size: 100x100
+- Bio-hazard cells placed: 1000
+- Random starting position of agent: (4, 46)
+
+4. Console Output:
+Stop reason: Next move inaccessible
+Total steps taken: 17
+Total waste collected: 2
+Percentage of bio-hazard cleaned: 0.20%
+Average steps per waste collected: 8.50
+Total path length: 18
+
+Agent Path (first to last):
+1: (4, 46)
+2: (3, 46)
+3: (2, 46)
+4: (2, 47)
+5: (2, 48)
+6: (2, 49)
+7: (1, 49)
+8: (1, 48)
+9: (1, 47)
+10: (1, 46)
+11: (1, 45)
+12: (1, 44)
+13: (1, 43)
+14: (2, 43)
+15: (2, 42)
+16: (2, 41)
+17: (1, 41)
+18: (1, 40)
+
+Collected Bio-Hazard Coordinates:
+1: (2, 49)
+2: (2, 42)
+
+===== END OF REPORT =====

@@ -1,0 +1,546 @@
+================================================================================
+BIO-HAZARD CLEANING INTELLIGENT AGENT - TEST CASE DOCUMENTATION
+================================================================================
+
+
+1. ENVIRONMENT MODULE TESTS (43 tests)
+--------------------------------------------------------------------------------
+1. test_academic_buildings_inaccessible
+   Test that academic buildings are marked as inaccessible.
+
+2. test_administrative_buildings_inaccessible
+   Test that administrative buildings are inaccessible.
+
+3. test_borders_are_inaccessible
+   Test that all borders are marked as inaccessible (value 2).
+
+4. test_clean_all_hazards
+   Test cleaning all hazards.
+
+5. test_clean_cell_no_hazard
+   Test cleaning a cell without bio-hazard returns False.
+
+6. test_clean_cell_reduces_hazard_count
+   Test that cleaning reduces bio-hazard count.
+
+7. test_clean_cell_success
+   Test cleaning a cell with bio-hazard.
+
+8. test_clean_cell_twice_returns_false
+   Test that cleaning twice returns False on second attempt.
+
+9. test_count_areas_sum_to_grid_size
+   Test that sum of all area types equals grid size.
+
+10. test_count_bio_hazards
+   Test counting bio-hazards.
+
+11. test_count_clean_areas
+   Test counting clean areas.
+
+12. test_count_inaccessible_areas
+   Test counting inaccessible areas.
+
+13. test_environment_grid_dtype
+   Test that grid is initialized with correct data type.
+
+14. test_environment_grid_is_numpy_array
+   Test that grid is a numpy array.
+
+15. test_environment_initialization_size_10
+   Test that environment initializes with correct size.
+
+16. test_environment_initialization_size_50
+   Test environment initialization with different size.
+
+17. test_get_bio_hazard_coordinates
+   Test retrieving bio-hazard coordinates.
+
+18. test_get_bio_hazard_coordinates_empty
+   Test getting bio-hazard coordinates when none exist.
+
+19. test_get_grid_returns_copy
+   Test that get_grid returns a copy not reference.
+
+20. test_get_grid_same_size
+   Test that returned grid has same size as original.
+
+21. test_get_inaccessible_coordinates
+   Test retrieving inaccessible area coordinates.
+
+22. test_get_inaccessible_coordinates_count_matches
+   Test that coordinate count matches inaccessible area count.
+
+23. test_guest_house_inaccessible
+   Test that guest house is inaccessible.
+
+24. test_is_accessible_building_area
+   Test is_accessible for building areas.
+
+25. test_is_accessible_clean_area
+   Test is_accessible for clean accessible areas.
+
+26. test_is_accessible_inaccessible_border
+   Test is_accessible for inaccessible border cells.
+
+27. test_is_bio_hazard_false_clean_area
+   Test is_bio_hazard on clean area.
+
+28. test_is_bio_hazard_true
+   Test is_bio_hazard when position contains hazard.
+
+29. test_is_clean_after_cleaning
+   Test is_clean after cleaning a hazard.
+
+30. test_is_clean_empty_position
+   Test is_clean on accessible clean area.
+
+31. test_is_inside_grid_boundary_positions
+   Test is_inside_grid with boundary positions.
+
+32. test_is_inside_grid_negative_indices
+   Test is_inside_grid with negative indices.
+
+33. test_is_inside_grid_outside_bottom
+   Test is_inside_grid with position below bottom boundary.
+
+34. test_is_inside_grid_outside_right
+   Test is_inside_grid with position outside right boundary.
+
+35. test_is_inside_grid_valid_positions
+   Test is_inside_grid with valid positions.
+
+36. test_large_grid_size
+   Test environment with large size.
+
+37. test_minimum_grid_size
+   Test environment with minimum size.
+
+38. test_place_bio_hazards_count
+   Test that correct number of bio-hazards are placed.
+
+39. test_place_bio_hazards_in_accessible_areas_only
+   Test that bio-hazards are only placed in accessible areas.
+
+40. test_place_bio_hazards_no_duplicates
+   Test that bio-hazards are not placed in duplicate positions.
+
+41. test_place_bio_hazards_zero_hazards
+   Test placing zero bio-hazards.
+
+42. test_place_maximum_hazards
+   Test placing maximum possible bio-hazards (all accessible areas).
+
+43. test_pond_inaccessible
+   Test that pond area is marked as inaccessible.
+
+
+2. AGENT MODULE TESTS (46 tests)
+--------------------------------------------------------------------------------
+1. test_agent_initialization_active_state
+   Test that agent initializes in active state.
+
+2. test_agent_initialization_path
+   Test that path contains starting position.
+
+3. test_agent_initialization_path_list_type
+   Test that path is a list.
+
+4. test_agent_initialization_position
+   Test that agent initializes with correct starting position.
+
+5. test_agent_initialization_steps_count
+   Test that agent initializes with zero steps.
+
+6. test_agent_initialization_stop_reason
+   Test that agent initializes with None stop reason.
+
+7. test_agent_initialization_visited_positions
+   Test that starting position is marked as visited.
+
+8. test_agent_initialization_visited_set_type
+   Test that visited_positions is a set.
+
+9. test_agent_initialization_waste_collected
+   Test that agent initializes with zero waste collected.
+
+10. test_agent_with_large_position
+   Test agent initialization with large coordinates.
+
+11. test_agent_with_negative_position
+   Test agent initialization with negative coordinates (edge case).
+
+12. test_agent_with_zero_position
+   Test agent initialization with zero coordinates.
+
+13. test_collect_waste_increments_count
+   Test that collect_waste increments waste counter.
+
+14. test_collect_waste_independent_from_steps
+   Test that waste collection is independent from movement.
+
+15. test_collect_waste_large_count
+   Test collecting large amount of waste.
+
+16. test_collect_waste_multiple_times
+   Test collecting waste multiple times.
+
+17. test_get_current_position
+   Test get_current_position returns correct position.
+
+18. test_get_path_contains_start
+   Test get_path contains starting position.
+
+19. test_get_path_correct_length
+   Test get_path returns correct path length.
+
+20. test_get_path_maintains_order
+   Test that get_path maintains insertion order.
+
+21. test_get_path_returns_copy
+   Test that get_path returns a copy, not reference.
+
+22. test_get_statistics_after_collection
+   Test statistics after waste collection.
+
+23. test_get_statistics_after_movement
+   Test statistics after movement.
+
+24. test_get_statistics_after_stop
+   Test statistics after stopping.
+
+25. test_get_statistics_combined
+   Test statistics with multiple operations.
+
+26. test_get_statistics_has_required_keys
+   Test that statistics dict has all required keys.
+
+27. test_get_statistics_initial_values
+   Test statistics initial values.
+
+28. test_get_statistics_returns_dict
+   Test get_statistics returns a dictionary.
+
+29. test_has_visited_after_movement
+   Test has_visited returns True after move.
+
+30. test_has_visited_multiple_positions
+   Test has_visited with multiple positions.
+
+31. test_has_visited_starting_position
+   Test has_visited returns True for starting position.
+
+32. test_has_visited_unvisited_position
+   Test has_visited returns False for unvisited position.
+
+33. test_rapid_movements
+   Test rapid successive movements.
+
+34. test_same_position_multiple_times
+   Test tracking when trying to update with same position (edge case).
+
+35. test_steps_equals_path_length_minus_one
+   Test that steps_taken equals number of movements.
+
+36. test_stop_changes_active_state
+   Test that stop changes active to False.
+
+37. test_stop_different_reasons
+   Test stop with different reason strings.
+
+38. test_stop_once_set_remains
+   Test that once stopped, agent remains stopped.
+
+39. test_stop_sets_stop_reason
+   Test that stop sets the stop reason.
+
+40. test_update_position_adds_to_path
+   Test that new position is added to path.
+
+41. test_update_position_adds_to_visited
+   Test that new position is added to visited set.
+
+42. test_update_position_changes_current_position
+   Test that update_position changes current position.
+
+43. test_update_position_increments_steps
+   Test that update_position increments step counter.
+
+44. test_update_position_maintains_path_order
+   Test that path maintains insertion order.
+
+45. test_update_position_multiple_increments
+   Test multiple position updates increment steps correctly.
+
+46. test_visited_positions_represents_path_uniqueness
+   Test that visited_positions set has same length as unique path elements.
+
+
+3. MOVEMENT MODULE TESTS (34 tests)
+--------------------------------------------------------------------------------
+1. test_agent_stops_on_border_hit_bottom
+   Test that move to border position fails.
+
+2. test_agent_stops_on_border_hit_left
+   Test that move to border position fails.
+
+3. test_agent_stops_on_border_hit_right
+   Test that move to border position fails.
+
+4. test_agent_stops_on_border_hit_top
+   Test that move to border position fails.
+
+5. test_border_hit_only_once
+   Test that move beyond grid bounds triggers agent stop.
+
+6. test_failed_move_doesnt_change_agent_position
+   Test that failed move doesn't change agent position.
+
+7. test_is_move_valid_accessible_unvisited
+   Test valid move to accessible unvisited position.
+
+8. test_is_move_valid_diagonal_not_standard
+   Test diagonal move (not typically used in 4-directional movement).
+
+9. test_is_move_valid_down_direction
+   Test valid move in down direction.
+
+10. test_is_move_valid_far_outside_grid
+   Test move far outside grid boundaries.
+
+11. test_is_move_valid_left_direction
+   Test valid move in left direction.
+
+12. test_is_move_valid_multiple_visits_blocked
+   Test that multiple revisit attempts are all blocked.
+
+13. test_is_move_valid_negative_coordinates
+   Test move with negative coordinates.
+
+14. test_is_move_valid_outside_bottom_boundary
+   Test that move below grid fails.
+
+15. test_is_move_valid_outside_left_boundary
+   Test that move to left boundary fails.
+
+16. test_is_move_valid_outside_right_boundary
+   Test that move to right boundary fails.
+
+17. test_is_move_valid_outside_top_boundary
+   Test that move above grid fails.
+
+18. test_is_move_valid_revisit_after_movement
+   Test that revisiting a cell is invalid.
+
+19. test_is_move_valid_right_direction
+   Test valid move in right direction.
+
+20. test_is_move_valid_to_border
+   Test that move to border (inaccessible) fails.
+
+21. test_is_move_valid_to_building_area
+   Test that move to building area (inaccessible) fails.
+
+22. test_is_move_valid_to_pond
+   Test that move to pond area fails.
+
+23. test_is_move_valid_to_visited_position
+   Test that move to already visited position fails.
+
+24. test_is_move_valid_up_direction
+   Test valid move in up direction.
+
+25. test_move_at_maximum_grid_position
+   Test movement at maximum valid grid position.
+
+26. test_move_fails_any_condition
+   Test that move fails if any condition fails.
+
+27. test_move_to_corner_at_border
+   Test move to corner at border.
+
+28. test_move_to_corner_inside
+   Test move to corner inside grid.
+
+29. test_move_validation_all_conditions
+   Test move validation with all three conditions passing.
+
+30. test_movement_initialization_agent
+   Test that movement module initializes with agent.
+
+31. test_movement_initialization_environment
+   Test that movement module initializes with environment.
+
+32. test_movement_validation_consistency
+   Test that validation result is consistent for same inputs.
+
+33. test_movement_with_circular_path
+   Test that agent cannot create circular path (revisit).
+
+34. test_valid_move_still_requires_manual_update
+   Test that valid move doesn't auto-update agent (just validation).
+
+
+4. ACTION MODULE TESTS (50 tests)
+--------------------------------------------------------------------------------
+1. test_action_delta_components_range
+   Test that delta components are within expected range.
+
+2. test_action_delta_exactly_one_component_changed
+   Test that each action changes exactly one coordinate.
+
+3. test_action_delta_no_diagonal_movement
+   Test that no action produces diagonal movement.
+
+4. test_action_has_four_directions
+   Test that Action contains four movement directions.
+
+5. test_action_has_move_down
+   Test that MOVE_DOWN action exists.
+
+6. test_action_has_move_left
+   Test that MOVE_LEFT action exists.
+
+7. test_action_has_move_right
+   Test that MOVE_RIGHT action exists.
+
+8. test_action_has_move_up
+   Test that MOVE_UP action exists.
+
+9. test_action_initialization
+   Test that Action initializes correctly.
+
+10. test_all_valid_actions_in_returned_list
+   Test that all valid actions are in get_all_actions result.
+
+11. test_delta_tuple_length
+   Test that delta tuples have length 2.
+
+12. test_delta_values_are_integers
+   Test that delta components are integers.
+
+13. test_delta_values_are_tuples
+   Test that deltas are returned as tuples.
+
+14. test_get_action_delta_case_sensitive
+   Test that action names are case-sensitive.
+
+15. test_get_action_delta_empty_string
+   Test get_action_delta with empty string.
+
+16. test_get_action_delta_invalid_action
+   Test get_action_delta with invalid action name.
+
+17. test_get_action_delta_none_input
+   Test get_action_delta with None input.
+
+18. test_get_action_delta_typo
+   Test get_action_delta with typo in action name.
+
+19. test_get_all_actions_contains_down
+   Test that get_all_actions includes MOVE_DOWN.
+
+20. test_get_all_actions_contains_left
+   Test that get_all_actions includes MOVE_LEFT.
+
+21. test_get_all_actions_contains_right
+   Test that get_all_actions includes MOVE_RIGHT.
+
+22. test_get_all_actions_contains_up
+   Test that get_all_actions includes MOVE_UP.
+
+23. test_get_all_actions_count
+   Test that get_all_actions returns all four actions.
+
+24. test_get_all_actions_matches_delta_availability
+   Test that all returned actions have deltas.
+
+25. test_get_all_actions_matches_valid_action_check
+   Test that all returned actions are valid.
+
+26. test_get_all_actions_no_duplicates
+   Test that get_all_actions has no duplicate actions.
+
+27. test_get_all_actions_returns_copy
+   Test that get_all_actions returns a list (not reference to internal).
+
+28. test_get_all_actions_returns_list
+   Test that get_all_actions returns a list.
+
+29. test_get_all_actions_returns_strings
+   Test that all actions are strings.
+
+30. test_invalid_action_partition
+   Test invalid action equivalence partition.
+
+31. test_is_valid_action_all_valid
+   Test is_valid_action for all valid actions.
+
+32. test_is_valid_action_case_sensitive
+   Test that is_valid_action is case-sensitive.
+
+33. test_is_valid_action_empty_string
+   Test is_valid_action with empty string.
+
+34. test_is_valid_action_invalid_action
+   Test is_valid_action with invalid action.
+
+35. test_is_valid_action_move_down
+   Test is_valid_action with MOVE_DOWN.
+
+36. test_is_valid_action_move_left
+   Test is_valid_action with MOVE_LEFT.
+
+37. test_is_valid_action_move_right
+   Test is_valid_action with MOVE_RIGHT.
+
+38. test_is_valid_action_move_up
+   Test is_valid_action with MOVE_UP.
+
+39. test_is_valid_action_none
+   Test is_valid_action with None.
+
+40. test_is_valid_action_partial_match
+   Test is_valid_action with partial match.
+
+41. test_is_valid_action_special_characters
+   Test is_valid_action with special characters.
+
+42. test_is_valid_action_typo
+   Test is_valid_action with typo.
+
+43. test_is_valid_action_whitespace
+   Test is_valid_action with whitespace.
+
+44. test_move_down_delta
+   Test MOVE_DOWN returns correct delta (1, 0).
+
+45. test_move_left_delta
+   Test MOVE_LEFT returns correct delta (0, -1).
+
+46. test_move_left_right_are_opposite
+   Test that MOVE_LEFT and MOVE_RIGHT are opposite.
+
+47. test_move_right_delta
+   Test MOVE_RIGHT returns correct delta (0, 1).
+
+48. test_move_up_delta
+   Test MOVE_UP returns correct delta (-1, 0).
+
+49. test_move_up_down_are_opposite
+   Test that MOVE_UP and MOVE_DOWN are opposite.
+
+50. test_valid_action_partition
+   Test valid action equivalence partition.
+
+
+================================================================================
+TEST SUMMARY
+================================================================================
+Environment Module:     43 tests
+Agent Module:           46 tests
+Movement Module:        34 tests
+Action Module:          50 tests
+--------------------------------------------------------------------------------
+TOTAL:                 173 tests
+================================================================================
