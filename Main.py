@@ -5,32 +5,27 @@ from Movement import Movement
 from Random import Random
 import random
 
-# Initialize Environment
 env = Environment(size=100)
-env.place_bio_hazards(1000)  # Place 1000 random bio-hazard cells
+env.place_bio_hazards(1000)
 
 print("Initial Bio-Hazard Cells:", env.count_bio_hazards())
 print("Initial Clean Cells:", env.count_clean_areas())
 print("Initial Inaccessible Cells:", env.count_inaccessible_areas())
 
-# Initialize Agent
 clean_cells = env.get_clean_area_coordinates()
 start_position = tuple(random.choice(clean_cells))
 agent = Agent(start_position=start_position)
 
 print(f"Agent starting at: {start_position}")
 
-# Keep track of collected coordinates
 collected_coordinates = []
 
-# Initialize Modules
 action_module = Action()
 movement_validator = Movement(environment=env, agent=agent)
 random_movement = Random(agent=agent,
                          action_module=action_module,
                          movement_validator=movement_validator)
 
-# Simulation Loop
 while agent.active:
     actions = action_module.get_all_actions()
     random.shuffle(actions)
@@ -42,40 +37,33 @@ while agent.active:
         new_c = agent.get_current_position()[1] + dc
         new_pos = (new_r, new_c)
 
-        # Stop immediately if next cell is inaccessible
         if not env.is_accessible(new_pos):
             agent.stop("Next move inaccessible")
             moved = False
             break
 
-        # Validate movement
         if movement_validator.is_move_valid(new_pos):
-            # Update agent position
             agent.update_position(new_pos)
             moved = True
 
-            # Object Collection Simulation
             if env.is_bio_hazard(new_pos):
                 env.clean_cell(new_pos)
                 agent.collect_waste()
-                collected_coordinates.append(new_pos)  # Track coordinates
+                collected_coordinates.append(new_pos)
 
             break
 
-    # No valid moves left → stop
     if not moved and agent.active:
         agent.stop("No valid moves left")
 
-# Performance Evaluation
 stats = agent.get_statistics()
 total_steps = stats["steps_taken"]
 total_waste = stats["waste_collected"]
-initial_bio_hazard = 1000  # same as placed initially
+initial_bio_hazard = 1000
 percentage_cleaned = (total_waste / initial_bio_hazard) * 100
 avg_steps_per_waste = total_steps / total_waste if total_waste > 0 else 0
 stop_reason = stats["stop_reason"]
 
-# Print Simulation Summary
 print("\n===== Simulation Finished =====")
 print("Stop reason:", stop_reason)
 print("Total steps taken:", total_steps)
@@ -88,25 +76,21 @@ print("\nAgent Path from First to Last:")
 for step, pos in enumerate(agent.get_path(), 1):
     print(f"Step {step}: {pos}")
 
-# Print Collected Coordinates
 print("\nCollected Bio-Hazard Coordinates:")
 for idx, coord in enumerate(collected_coordinates, 1):
     print(f"{idx}: {coord}")
 
-# Generate Report
 report_file = "simulation_report.txt"
 
 with open(report_file, "w") as f:
     f.write("===== BIO-HAZARD CLEANING AGENT SIMULATION REPORT =====\n\n")
 
-    # 1. Data Structures Used
     f.write("1. Data Structures Used:\n")
     f.write("- 2D numpy arrays for environment grid\n")
     f.write("- Lists for storing clean, inaccessible, and bio-hazard coordinates\n")
     f.write("- List for storing agent path\n")
     f.write("- List for storing collected bio-hazard coordinates\n\n")
 
-    # 2. Algorithm Description
     f.write("2. Algorithm Description:\n")
     f.write("- Initialize environment (100x100 grid) with inaccessible areas and random bio-hazards\n")
     f.write("- Initialize agent at a random clean cell\n")
@@ -117,13 +101,11 @@ with open(report_file, "w") as f:
     f.write("    - If the cell has bio-hazard, collect and mark as cleaned\n")
     f.write("    - Stop if no valid moves or next cell is inaccessible\n\n")
 
-    # 3. Test Data
     f.write("3. Test Data:\n")
     f.write(f"- Environment size: 100x100\n")
     f.write(f"- Bio-hazard cells placed: {initial_bio_hazard}\n")
     f.write(f"- Random starting position of agent: {start_position}\n\n")
 
-    # 4. Console Output
     f.write("4. Console Output:\n")
     f.write(f"Stop reason: {stop_reason}\n")
     f.write(f"Total steps taken: {total_steps}\n")

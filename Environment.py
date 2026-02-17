@@ -9,19 +9,13 @@ class Environment:
 
         self._create_inaccessible_areas()
 
-    # =====================================================
-    # Environment Construction
-    # =====================================================
     def _create_inaccessible_areas(self):
         size = self.size
-
-        # Always create border
         self.grid[0, :] = 2
         self.grid[size - 1, :] = 2
         self.grid[:, 0] = 2
         self.grid[:, size - 1] = 2
 
-        # Only create internal buildings if grid is large enough
         if size >= 100:
             self.grid[1:21, 79:99] = 2
             self.grid[39:60, 79:99] = 2
@@ -32,14 +26,10 @@ class Environment:
             self.grid[40:50, 0:15] = 2
             self.grid[35:61, 35:61] = 2
 
-    # =====================================================
-    # Bio Hazard Placement
-    # =====================================================
     def place_bio_hazards(self, bio_hazard_count):
         if bio_hazard_count <= 0:
             return 0
 
-        # Accessible and clean cells only
         empty_positions = np.argwhere(self.grid == 0)
 
         if len(empty_positions) == 0:
@@ -61,9 +51,6 @@ class Environment:
 
         return int(actual_count)
 
-    # =====================================================
-    # Queries
-    # =====================================================
     def is_inside_grid(self, position):
         if position is None or len(position) != 2:
             return False
@@ -88,9 +75,6 @@ class Environment:
         r, c = position
         return bool(self.grid[r, c] == 0)
 
-    # =====================================================
-    # Cleaning
-    # =====================================================
     def clean_cell(self, position):
         if not self.is_inside_grid(position):
             return False
@@ -103,9 +87,6 @@ class Environment:
 
         return False
 
-    # =====================================================
-    # Counting
-    # =====================================================
     def count_bio_hazards(self):
         return int(np.sum(self.grid == 1))
 
@@ -118,9 +99,6 @@ class Environment:
     def count_accessible_areas(self):
         return int(np.sum(self.grid != 2))
 
-    # =====================================================
-    # Coordinate Getters
-    # =====================================================
     def get_grid(self):
         return self.grid.copy()
 
