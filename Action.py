@@ -6,7 +6,6 @@ class Action:
             "MOVE_LEFT": (0, -1),
             "MOVE_RIGHT": (0, 1)
         }
-
     def get_all_actions(self):
         return list(self.actions.keys())
 
@@ -15,3 +14,10 @@ class Action:
 
     def is_valid_action(self, action_name):
         return action_name in self.actions
+    
+
+    # python -m pytest tests -v
+    # python -m pytest tests/test_environment.py -v
+    # python -m pytest tests/test_action.py -v
+    # python -m pytest tests/test_movement.py -v
+    # python -m pytest tests/test_agent.py -v

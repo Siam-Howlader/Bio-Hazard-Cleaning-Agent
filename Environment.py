@@ -28,6 +28,8 @@ class Environment:
 
     def place_bio_hazards(self, bio_hazard_count):
         if bio_hazard_count <= 0:
+            # Clear all existing bio hazards
+            self.grid[self.grid == 1] = 0
             return 0
 
         empty_positions = np.argwhere(self.grid == 0)
