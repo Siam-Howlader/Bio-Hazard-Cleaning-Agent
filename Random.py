@@ -36,7 +36,7 @@ class Random:
                 if sdr and sdc:
                     cands.append((ar + sdr, ac + sdc))
                 for cand in cands:
-                    if self.movement_validator.is_move_valid(cand):
+                    if self.movement_validator.is_move_valid(self.agent.get_current_position(), cand, getattr(self.agent, "visited_positions", set())):
                         self.agent.update_position(cand)
                         self.agent.alternative_paths_used += 1
                         if env.is_bio_hazard(cand):
@@ -44,7 +44,7 @@ class Random:
                             self.agent.collect_waste()
                         return True
                 continue
-            if self.movement_validator.is_move_valid(new):
+            if self.movement_validator.is_move_valid(self.agent.get_current_position(), new, getattr(self.agent, "visited_positions", set())):
                 self.agent.update_position(new)
                 if env and env.is_bio_hazard(new):
                     env.clean_cell(new)
