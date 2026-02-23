@@ -6,16 +6,10 @@ class Movement:
         self.environment = environment
         self.agent = agent
 
-    def is_move_valid(self, current_position, next_position, visited_positions):
-        """
-        Returns True only if:
-        - next_position is inside the grid
-        - next_position is accessible
-        - next_position is not in visited_positions
-        - next_position is different from current_position
-        """
+    def is_move_valid(self, next_position):
         next_position = tuple(next_position)
-        current_position = tuple(current_position)
+        current_position = tuple(self.agent.get_current_position())
+        visited_positions = getattr(self.agent, "visited_positions", set())
 
         if not bool(self.environment.is_inside_grid(next_position)):
             if hasattr(self.agent, "stop"):

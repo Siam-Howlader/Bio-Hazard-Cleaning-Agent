@@ -8,6 +8,8 @@ class Agent:
         self.path = []
         self.steps_taken = 0
         self.waste_collected = 0
+        self.human_encounters = 0
+        self.alternative_paths_used = 0
         self._visit_position(start_position)
 
     def _visit_position(self, position):

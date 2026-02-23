@@ -21,3 +21,4 @@ class Action:
     # python -m pytest tests/test_action.py -v
     # python -m pytest tests/test_movement.py -v
     # python -m pytest tests/test_agent.py -v
+    # python -m pytest -q -s tests/test_human_avoidance.py

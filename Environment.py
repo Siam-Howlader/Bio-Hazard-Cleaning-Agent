@@ -112,3 +112,27 @@ class Environment:
 
     def get_clean_area_coordinates(self):
         return np.argwhere(self.grid == 0).tolist()
+
+    def place_humans(self, human_count):
+        if human_count <= 0:
+            self.grid[self.grid == 3] = 0
+            return 0
+
+        empty_positions = np.argwhere(self.grid == 0)
+        if len(empty_positions) == 0:
+            return 0
+
+        actual_count = min(int(human_count), len(empty_positions))
+        if actual_count <= 0:
+            return 0
+
+        selected_indices = np.random.choice(len(empty_positions), actual_count, replace=False)
+        rows, cols = empty_positions[selected_indices].T
+        self.grid[rows, cols] = 3
+        return int(actual_count)
+
+    def is_human(self, position):
+        if not self.is_inside_grid(position):
+            return False
+        r, c = position
+        return bool(self.grid[r, c] == 3)
