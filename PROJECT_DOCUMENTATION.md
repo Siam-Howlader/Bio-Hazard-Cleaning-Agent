@@ -123,7 +123,96 @@ Each action defines row and column deltas for movement.
      - Move to new position
      - If bio-hazard exists, clean it
 
+  Note: a short adjacency check now pre-scans neighbor cells for humans and delegates avoidance work to a small `human_avoidance.py` module for clearer separation of concerns.
+
 ---
+
+  ## Algorithms
+
+  This section describes the core algorithms used by the agent, with concise pseudocode and complexity notes.
+
+  ### 1. Movement Validation (Movement.is_move_valid)
+
+  Purpose: ensure a single-step candidate is legal before moving.
+
+  Pseudocode:
+  ```
+  function is_move_valid(current, next, visited):
+    if next is outside grid: return False
+    if grid[next] == INACCESSIBLE: return False
+    if next in visited: return False
+    if next == current: return False
+    return True
+  ```
+
+  Complexity: O(1) per candidate (bounds and cell-value checks, set membership).
+
+  ### 2. Random Move Selection (Random.perform_random_move)
+
+  Purpose: choose a random legal move while respecting human avoidance.
+
+  Pseudocode:
+  ```
+  function perform_random_move():
+    actions = shuffled(all_actions)
+    // quick neighbor-scan for humans
+    for action in actions:
+      neigh = current + delta(action)
+      if env.is_human(neigh):
+        if handle_human_encounter(agent, env, movement_validator):
+          return True
+    // normal attempt loop
+    for action in actions:
+      new = current + delta(action)
+      if env.is_human(new):
+        if handle_human_encounter(agent, env, movement_validator):
+          return True
+        continue
+      if is_move_valid(current, new, visited):
+        update_position(new)
+        if env.is_bio_hazard(new): clean and collect
+        return True
+    stop("No valid moves")
+    return False
+  ```
+
+  Complexity: tries at most 4 actions; each validation is O(1). Overall O(1) per move attempt (ignoring avoidance nearest-search cost).
+
+  ### 3. Human Avoidance (human_avoidance.handle_human_encounter)
+
+  Purpose: when a proposed move would confront a human, pick an alternative one-step move oriented toward the nearest bio-hazard.
+
+  Pseudocode:
+  ```
+  function handle_human_encounter(agent, env, validator):
+    agent.human_encounters += 1
+    bio_coords = env.get_bio_hazard_coordinates()
+    if bio_coords is empty: return False
+    nearest = argmin_b manhattan_distance(agent.pos, b)
+    sdr = sign(nearest.row - agent.row)
+    sdc = sign(nearest.col - agent.col)
+    candidates = []
+    if sdr != 0: candidates.append((agent.row + sdr, agent.col))
+    if sdc != 0: candidates.append((agent.row, agent.col + sdc))
+    if sdr != 0 and sdc != 0: candidates.append((agent.row + sdr, agent.col + sdc))
+    for cand in candidates: // order: row-only, col-only, diagonal
+      if validator.is_move_valid(agent.pos, cand, agent.visited_positions):
+        agent.update_position(cand)
+        agent.alternative_paths_used += 1
+        if env.is_bio_hazard(cand): env.clean_cell(cand); agent.collect_waste()
+        return True
+    return False
+  ```
+
+  Complexity:
+  - Nearest search: O(H) where H is number of bio-hazard cells (linear scan using Manhattan distance).
+  - Candidate checks: up to 3, each O(1).
+
+  Notes and trade-offs:
+  - Greedy, single-step approach: the avoidance routine only selects one-step alternatives (row-only, column-only, diagonal) toward the chosen target. It does not perform multi-step pathfinding. This keeps CPU cost low and logic simple but can fail in tightly constrained mazes.
+  - If no bio-hazards exist or all candidates are invalid (visited/inaccessible/occupied), avoidance returns False and the normal random-move loop continues.
+  - For larger environments or high-density hazards, consider replacing the linear nearest search with a spatial index or performing multi-step planning (BFS/A*) toward the target.
+
 
 ## Input and Output Examples
 
@@ -167,6 +256,8 @@ Bio-hazards per run: 200
 Humans per run: 30
 Max steps per run: 1000
 ```
+
+Note: `Main.py` runs this batch by default (100 runs) and prints aggregated totals for encounters, avoidance actions, and objects collected.
 
 **Aggregated Output**:
 ```
@@ -242,6 +333,8 @@ If (15, 14) has bio-hazard:
 ### 1. **Intelligent Avoidance**
 When detecting a human, the agent doesn't just stop—it actively moves toward the nearest bio-hazard to continue mission objectives while avoiding the human.
 
+The avoidance logic is implemented in `human_avoidance.py`; `Random.perform_random_move()` delegates to it and also performs a quick neighbor check to improve detection.
+
 ### 2. **Efficient Distance Metric**
 Uses Manhattan distance to find nearest bio-hazard: `|r1 - r2| + |c1 - c2|`
 
@@ -306,5 +399,5 @@ This markdown file is optimized for PDF conversion using tools like:
 ---
 
 **Document Version**: 1.0  
-**Last Updated**: February 23, 2026  
+**Last Updated**: February 24, 2026  
 **Project Status**: Complete & Tested (41/41 tests passing)
